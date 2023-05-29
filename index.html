@@ -35,9 +35,15 @@
             );
             // 地図インスタンスへレイヤーを追加
             map.addLayer(backgroundLayer);
-            // ピン定義
-            L.marker([33, 129.5]).bindPopup('平面直角座標1系原点').addTo(map);
-            L.marker([33, 131.0]).bindPopup('平面直角座標2系原点').addTo(map);
+            // GeoJSONレイヤーを作成
+            fetch('./P29-21_10.geojson')
+                .then((res) => res.json())
+                .then((json) => {
+                    // GeoJSONレイヤーを作成
+                    L.geoJSON(json)
+                        .bindPopup((layer) => layer.feature.properties.P29_004)  // ポップアップで学校名を表示
+                        .addTo(map);                                             // 地図に追加
+                });
         </script>
     </body>
 </html>
